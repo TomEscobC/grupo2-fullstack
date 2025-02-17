@@ -1,0 +1,47 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.login {
+    font-family: Arial, sans-serif;
+    position: relative; 
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('https://www.chelenko.com/wp-content/uploads/2020/11/255091966.jpg') no-repeat center center fixed;
+    background-size: cover;
+    filter: blur(2px);  
+    z-index: -1;  
+}
+
+form {
+    width: 100%;
+    max-width: 500px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.7);  
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.link-blanco {
+    color: white;
+    text-decoration: none;
+}
