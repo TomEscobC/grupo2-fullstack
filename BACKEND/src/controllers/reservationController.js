@@ -5,17 +5,36 @@ const Client = require("../models/clientModels");
 const obtenerReservas = async (req, res) => {
     try {
         const reservas = await Reservation.find()
-            .populate("cabin") 
-            .populate("client", "name documentNumber email phone");  // ✅ Poblamos el cliente correctamente
+            .populate('client', 'name documentNumber email phone') // Poblar cliente
+            .populate('cabin', 'name type maxAdults'); // Poblar cabaña
+            console.log(reserva); 
 
-        console.log("📌 Reservas obtenidas:", reservas);
+        console.log("Reservas con datos de cliente y cabaña:", reservas);
         res.json(reservas);
     } catch (error) {
-        console.error("❌ Error al obtener reservas:", error);
+        console.error("Error al obtener reservas:", error);
         res.status(500).json({ message: "Error en el servidor", error });
     }
 };
 
+// Obtener todas las reservas con la información del cliente y la habitación
+const obtenerReservasConDetalles = async (req, res) => {
+    try {
+      const reservas = await Reservation.find()
+        .populate("client")  // Poblamos la información del cliente
+        .populate("cabin");  // Poblamos la información de la cabaña
+  
+      res.json(reservas);
+    } catch (error) {
+      console.error("Error al obtener reservas con detalles:", error);
+      res.status(500).json({ message: "Error al obtener reservas", error });
+    }
+  };
+  
+  module.exports = {
+    obtenerReservasConDetalles,
+  };
+  
 // Crear una nueva reserva
 const crearReserva = async (req, res) => {
     try {
@@ -103,22 +122,35 @@ const eliminarReserva = async (req, res) => {
     }
 };
 
-// Actualizar una reserva
 const actualizarReserva = async (req, res) => {
     try {
+        // Primero actualizamos los datos del cliente si es necesario
+        if (req.body.client) {
+            const client = await Client.findByIdAndUpdate(req.body.client._id, req.body.client, { new: true });
+            if (!client) {
+                return res.status(404).json({ message: "Cliente no encontrado" });
+            }
+        }
+
+        // Luego actualizamos la reserva
         const reservaActualizada = await Reservation.findByIdAndUpdate(req.params.id, req.body, { new: true });
+
         if (!reservaActualizada) {
             return res.status(404).json({ message: "Reserva no encontrada" });
         }
+
         res.json(reservaActualizada);
     } catch (error) {
         res.status(500).json({ message: "Error al actualizar reserva", error });
     }
 };
 
+
+
 module.exports = {
     obtenerReservas,
     crearReserva,
     actualizarReserva,
-    eliminarReserva
+    eliminarReserva,
+    obtenerReservasConDetalles
 };
