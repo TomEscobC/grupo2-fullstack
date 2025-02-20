@@ -14,6 +14,11 @@ body {
   min-height: calc(100vh - 70px);
   overflow-y: auto;
 }
+
+.content-listares h1 {
+  text-align: center;
+}
+
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -28,6 +33,21 @@ body {
 
 .table th {
   background-color: #f2f2f2;
+}
+
+.btn-danger {
+  background-color: #dc3545 !important;
+  color: white !important;
+}
+
+.btn-warning {
+  background-color: #ffc107 !important;
+  color: black !important;
+}
+
+.btn-info {
+  background-color: #17a2b8 !important;
+  color: white !important;
 }
 
 
