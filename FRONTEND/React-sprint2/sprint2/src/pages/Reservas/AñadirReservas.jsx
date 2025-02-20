@@ -245,143 +245,127 @@ function AñadirReservas() {
 
 
   return (
-    <div className="content-añadirres">
-      <h1 className="title">Agregar Reserva</h1>
-      <form ref={formRef} onSubmit={handleSubmit}>
-          {/* Campo de tipo de documento */}
-          <label htmlFor="documentType" className="form-label">
-          Tipo de Documento:
-        </label>
-        <select
-          id="documentType"
-          name="documentType"
-          className="form-select"
-          value={clientDocumentType}
-          onChange={(e) => setClientDocumentType(e.target.value)}
-          required
-        >
-          <option value="RUT">RUT</option>
-          <option value="Pasaporte">Pasaporte</option>
-          <option value="ID Extranjero">ID Extranjero</option>
-        </select>
+    <div className="añadir-reserva-content">
+  <h1 className="añadir-reserva-title">Agregar Reserva</h1>
+  <form ref={formRef} onSubmit={handleSubmit} className="añadir-reserva-form">
+      {/* Tipo de Documento */}
+      <label htmlFor="documentType" className="añadir-reserva-label">Tipo de Documento:</label>
+      <select
+        id="documentType"
+        name="documentType"
+        className="añadir-reserva-select"
+        value={clientDocumentType}
+        onChange={(e) => setClientDocumentType(e.target.value)}
+        required
+      >
+        <option value="RUT">RUT</option>
+        <option value="Pasaporte">Pasaporte</option>
+        <option value="ID Extranjero">ID Extranjero</option>
+      </select>
 
-      <label htmlFor="documento_cliente" className="form-label">
-          Número de Documento:
-        </label>
-        <input
-          type="text"
-          id="documento_cliente"
-          name="documento_cliente"
-          className="form-input"
-          value={clientDocumentNumber}
-          onChange={handleClientDocumentNumber}
-          required
-        />
-        {rutError && <p className="error-text">{rutError}</p>}
+      {/* Número de Documento */}
+      <label htmlFor="documento_cliente" className="añadir-reserva-label">Número de Documento:</label>
+      <input
+        type="text"
+        id="documento_cliente"
+        name="documento_cliente"
+        className="añadir-reserva-input"
+        value={clientDocumentNumber}
+        onChange={handleClientDocumentNumber}
+        required
+      />
+      {rutError && <p className="añadir-reserva-error-text">{rutError}</p>}
 
-        <label htmlFor="nombre_cliente" className="form-label">
-          Nombre del Cliente:
-        </label>
-        <input
-          type="text"
-          id="nombre_cliente"
-          name="nombre_cliente"
-          className="form-input"
-          value={nombreCliente}
-          onChange={(e) => setNombreCliente(e.target.value)}
-          required
-        />
+      {/* Nombre del Cliente */}
+      <label htmlFor="nombre_cliente" className="añadir-reserva-label">Nombre del Cliente:</label>
+      <input
+        type="text"
+        id="nombre_cliente"
+        name="nombre_cliente"
+        className="añadir-reserva-input"
+        value={nombreCliente}
+        onChange={(e) => setNombreCliente(e.target.value)}
+        required
+      />
 
-               {/* Nuevo campo de nacionalidad */}
-        <label htmlFor="nacionalidad_cliente" className="form-label">
-          Nacionalidad del Cliente:
-        </label>
-        <input
-          type="text"
-          id="nacionalidad_cliente"
-          name="nacionalidad_cliente"
-          className="form-input"
-          value={nacionalidadCliente}
-          onChange={handleNacionalidadChange}
-          required
-        />
+      {/* Nacionalidad */}
+      <label htmlFor="nacionalidad_cliente" className="añadir-reserva-label">Nacionalidad:</label>
+      <input
+        type="text"
+        id="nacionalidad_cliente"
+        name="nacionalidad_cliente"
+        className="añadir-reserva-input"
+        value={nacionalidadCliente}
+        onChange={handleNacionalidadChange}
+        required
+      />
 
-        <label htmlFor="telefono_cliente" className="form-label">
-          Teléfono del Cliente:
-        </label>
-        <input
-          type="text"
-          id="telefono_cliente"
-          name="telefono_cliente"
-          className="form-input"
-          value={telefonoCliente}
-          onChange={(e) => setTelefonoCliente(e.target.value)}
-        />
+      {/* Teléfono */}
+      <label htmlFor="telefono_cliente" className="añadir-reserva-label">Teléfono:</label>
+      <input
+        type="text"
+        id="telefono_cliente"
+        name="telefono_cliente"
+        className="añadir-reserva-input"
+        value={telefonoCliente}
+        onChange={(e) => setTelefonoCliente(e.target.value)}
+      />
 
-        <label htmlFor="email_cliente" className="form-label">
-          Correo del Cliente:
-        </label>
-        <input
-          type="email"
-          id="email_cliente"
-          name="email_cliente"
-          className="form-input"
-          value={emailCliente}
-          onChange={(e) => setEmailCliente(e.target.value)}
-        />
+      {/* Correo Electrónico */}
+      <label htmlFor="email_cliente" className="añadir-reserva-label">Correo Electrónico:</label>
+      <input
+        type="email"
+        id="email_cliente"
+        name="email_cliente"
+        className="añadir-reserva-input"
+        value={emailCliente}
+        onChange={(e) => setEmailCliente(e.target.value)}
+      />
 
-        <label htmlFor="habitacion" className="form-label">
-          Seleccionar Cabaña:
-        </label>
-        <select
-          id="habitacion"
-          name="habitacion"
-          className="form-select"
-          value={habitacionSeleccionada}
-          onChange={(e) => setHabitacionSeleccionada(e.target.value)}
-          required
-        >
-          <option value="">Seleccione una cabaña</option>
-          {habitaciones.map((cabaña) => (
-            <option key={cabaña._id} value={cabaña._id}>
-             {cabaña.number}
-            </option>
-          ))}
-        </select>
+      {/* Selección de Cabaña */}
+      <label htmlFor="habitacion" className="añadir-reserva-label">Seleccionar Cabaña:</label>
+      <select
+        id="habitacion"
+        name="habitacion"
+        className="añadir-reserva-select"
+        value={habitacionSeleccionada}
+        onChange={(e) => setHabitacionSeleccionada(e.target.value)}
+        required
+      >
+        <option value="">Seleccione una cabaña</option>
+        {habitaciones.map((cabaña) => (
+          <option key={cabaña._id} value={cabaña._id}>{cabaña.number}</option>
+        ))}
+      </select>
 
-        <label htmlFor="fecha_entrada" className="form-label">
-          Fecha de Entrada:
-        </label>
-        <input
-          type="date"
-          id="fecha_entrada"
-          name="fecha_entrada"
-          className="form-input"
-          value={fechaEntrada}
-          onChange={(e) => setFechaEntrada(e.target.value)}
-          required
-        />
+      {/* Fechas */}
+      <label htmlFor="fecha_entrada" className="añadir-reserva-label">Fecha de Entrada:</label>
+      <input
+        type="date"
+        id="fecha_entrada"
+        name="fecha_entrada"
+        className="añadir-reserva-input"
+        value={fechaEntrada}
+        onChange={(e) => setFechaEntrada(e.target.value)}
+        required
+      />
 
-        <label htmlFor="fecha_salida" className="form-label">
-          Fecha de Salida:
-        </label>
-        <input
-          type="date"
-          id="fecha_salida"
-          name="fecha_salida"
-          className="form-input"
-          value={fechaSalida}
-          onChange={(e) => setFechaSalida(e.target.value)}
-          required
-        />
-
-        <label htmlFor="canal_origen" className="form-label">
-          Canal de Origen:
-        </label>
+      <label htmlFor="fecha_salida" className="añadir-reserva-label">Fecha de Salida:</label>
+      <input
+        type="date"
+        id="fecha_salida"
+        name="fecha_salida"
+        className="añadir-reserva-input"
+        value={fechaSalida}
+        onChange={(e) => setFechaSalida(e.target.value)}
+        required
+      />
+      {/* Canal de origen */}
+      <label htmlFor="canal_origen" className="añadir-reserva-label">Canal de Origen:</label>
         <select
           id="canal_origen"
           name="canal_origen"
-          className="form-select"
+          className="añadir-reserva-select"
           value={canalOrigen}
           onChange={(e) => setCanalOrigen(e.target.value)}
           required
@@ -390,28 +374,32 @@ function AñadirReservas() {
           <option value="Booking">Booking</option>
         </select>
 
-        <label htmlFor="estado" className="form-label">
+        {/* Estado de reserva */}
+
+        <label htmlFor="estado" className="añadir-reserva-label">
           Estado:
         </label>
         <select
           id="estado"
           name="estado"
-          className="form-select"
+          className="añadir-reserva-select"
           value={estado}
           onChange={(e) => setEstado(e.target.value)}
           required
         >
           <option value="Confirmada">Confirmada</option>
-          <option value="Pendiente">Pendiente</option>
+          <option value="Cancelada">Cancelada</option>
         </select>
 
-        <label htmlFor="tipo_pago" className="form-label">
+        {/* Tipo de pago */}
+
+        <label htmlFor="tipo_pago" className="añadir-reserva-label">
           Tipo de Pago:
         </label>
         <select
           id="tipo_pago"
           name="tipo_pago"
-          className="form-select"
+          className="añadir-reserva-select"
           value={paymentMethod}
           onChange={(e) => setPaymentMethod(e.target.value)}
           required
@@ -420,13 +408,15 @@ function AñadirReservas() {
           <option value="Débito">Débito</option>
         </select>
 
-        <label htmlFor="origen_pago" className="form-label">
+        {/* Origen de pago */}
+
+        <label htmlFor="origen_pago" className="añadir-reserva-label">
           Origen de Pago:
         </label>
         <select
           id="origen_pago"
           name="origen_pago"
-          className="form-select"
+          className="añadir-reserva-select"
           value={paymentOrigin}
           onChange={(e) => setPaymentOrigin(e.target.value)}
           required
@@ -435,44 +425,42 @@ function AñadirReservas() {
           <option value="Extranjero">Extranjero</option>
         </select>
 
- 
+        {/* Cantidad adultos y niños */}
 
-        <label htmlFor="adultos" className="form-label">
+        <label htmlFor="adultos" className="añadir-reserva-label">
           Adultos:
         </label>
         <input
           type="number"
           id="adultos"
           name="adultos"
-          className="form-input"
+          className="añadir-reserva-input"
           value={adultos}
           onChange={(e) => setAdultos(e.target.value)}
           required
         />
 
-        <label htmlFor="ninos" className="form-label">
+        <label htmlFor="ninos" className="añadir-reserva-label">
           Niños:
         </label>
         <input
           type="number"
           id="ninos"
           name="ninos"
-          className="form-input"
+          className="añadir-reserva-input"
           value={ninos}
           onChange={(e) => setNinos(e.target.value)}
           required
         />
 
-        <div className="form-buttons">
-          <button type="submit" className="submit-btn">
-            Aceptar
-          </button>
-          <button className="reset-btn" onClick={handleReset}>
-            Restablecer
-          </button>
-        </div>
-      </form>
-    </div>
+      {/* Botones */}
+      <div className="añadir-reserva-buttons">
+        <button type="submit" className="añadir-reserva-submit">Aceptar</button>
+        <button className="añadir-reserva-reset" onClick={handleReset}>Restablecer</button>
+      </div>
+  </form>
+</div>
+
   );
 }
 

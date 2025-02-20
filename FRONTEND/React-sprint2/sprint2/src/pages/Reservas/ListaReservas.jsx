@@ -25,6 +25,7 @@ const Reservas = () => {
     setShowEditModal(true);
   };
 
+const [update, setUpdate] = useState(false);
     // Actualizar reserva en la base de datos
 const handleUpdate = async () => {
   try {
@@ -146,7 +147,7 @@ useEffect(() => {
   useEffect(() => {
     const reservasFiltradas = reservas.filter(reserva => {
       const filtroPorRut = filtroRut ? reserva.client.documentNumber.includes(filtroRut) : true;
-      const filtroPorCabaña = filtroCabaña ? reserva.cabin.number.includes(filtroCabaña) : true;
+      const filtroPorCabaña = filtroCabaña ? reserva.cabin.number === filtroCabaña : true;
       const filtroPorFecha = filtroFecha ? (
         new Date(reserva.checkinDate).toISOString().split('T')[0] === filtroFecha ||
         new Date(reserva.checkoutDate).toISOString().split('T')[0] === filtroFecha
@@ -171,7 +172,7 @@ useEffect(() => {
     <div className="content-listares">
       <h1>Buscador de Reservas</h1>
       {/* Filtros */}
-      <Form inline>
+      <Form inline="true">
         <Form.Group className="mb-2 mr-sm-2">
           <Form.Control
             type="text"
@@ -188,8 +189,8 @@ useEffect(() => {
             onChange={handleFiltroCabaña}
           >
             <option value="">Filtrar por Cabaña</option>
-            {reservas.map((reserva) => (
-              <option key={reserva.cabin._id} value={reserva.cabin.number}>
+            {reservas.map((reserva, index) => (
+              <option key={reserva.cabin._id || `cabin-${index}`} value={reserva.cabin.number}>
                 {reserva.cabin.number}
               </option>
             ))}
