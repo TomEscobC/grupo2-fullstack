@@ -1,20 +1,3 @@
-/* Contenedor principal del componente Reportes */
-.reportes-container {
-  text-align: center;
-}
-
-/* Logo (si usas alguno en Reportes) */
-.reportes-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-/* Animación del logo (opcional) */
-@media (prefers-reduced-motion: no-preference) {
-  .reportes-logo {
-    animation: reportes-logo-spin infinite 20s linear;
-  }
-}
 
 /* Encabezado del componente Reportes */
 .reportes-header {

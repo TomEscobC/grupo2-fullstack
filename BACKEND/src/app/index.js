@@ -1,26 +1,28 @@
 require("dotenv").config();
 const express = require("express");
-const cors = require("cors");  // Asegúrate de importar cors
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt'); // Módulo bcrypt para el hash de los datos de register
-const conectarDB = require("../config/db");  // Asegúrate de que la ruta sea correcta
-const session = require('express-session'); // Importa express-session para gestionar el inicio de usuario
-const jwt = require('jsonwebtoken'); // Importa jsonwebtoken para gestionar JWT
+const cors = require("cors");
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const conectarDB = require("../config/db"); // Ajusté la ruta relativa
+const session = require("express-session");
+const jwt = require("jsonwebtoken");
 
-// Rutas de cliente, cabaña, Reserva
-const clientRoutes = require("../routes/clientRoutes");
-const cabinRoutes = require("../routes/cabinRoutes");
-const reservationRoutes = require("../routes/reservationRoutes");
-const registerRoutes = require("../routes/registerRoutes");
-const loginRoutes = require("../controllers/loginController");
+// Rutas
+const clientRoutes = require("./routes/clientRoutes");
+const cabinRoutes = require("./routes/cabinRoutes");
+const reservationRoutes = require("./routes/reservationRoutes");
+const registerRoutes = require("./routes/registerRoutes");
+const reportRoutes = require("./routes/reportRoutes"); // Nueva ruta para reportes
+const loginRoutes = require("./controllers/loginController");
 
 const app = express();
 
 // Configuración de CORS
 app.use(cors({
-  origin: "http://localhost:5173",  // Cambia esto a la URL de tu frontend
-  methods: ["GET", "POST", "PUT", "DELETE"],  // Los métodos que tu frontend puede usar
-  allowedHeaders: ["Content-Type", "Authorization"],  // Asegúrate de permitir 'Authorization'
+  origin: "http://localhost:5173", // URL del frontend (ajusta si cambia)
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true, // Habilita cookies/sesiones si es necesario
 }));
 
 // Conectar a la base de datos
@@ -29,51 +31,45 @@ conectarDB();
 // Middleware
 app.use(express.json());
 
-// Sesiones
+// Configuración de sesiones
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'default-secret',
+  secret: process.env.SESSION_SECRET || "default-secret",
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }
+  cookie: { secure: false }, // Cambia a true en producción con HTTPS
 }));
 
 // Middleware para autenticar JWT
 function authenticateToken(req, res, next) {
-    const token = req.header('Authorization')?.split(' ')[1]; // Recupera el token
-  
-    console.log("Token recibido:", token);  // Verifica el token
-  
-    if (!token) {
-      return res.status(401).json({ message: 'Falta el token de autenticación' });
-    }
-    try {
-        jwt.verify(token, process.env.SECRET_KEY || 'chlk', (err, user) => {
-            if (err) {
-                throw new Error("Error")
-              
-            }
-            console.log("Token verificado:", user);  // Verifica la información del usuario decodificada
-            req.user = user;
-            
-          } );
-          next();
-    } catch (error) {
-        return res.status(403).json({ message: 'Token no válido' });
-        console.log(error)
-    }
-    
+  const token = req.header("Authorization")?.split(" ")[1]; // Extrae el token después de "Bearer"
+
+  console.log("Token recibido:", token); // Debugging
+
+  if (!token) {
+    return res.status(401).json({ message: "Falta el token de autenticación" });
   }
-  
 
-app.use("/api/auth", loginRoutes);  // Ruta para el login
+  try {
+    const user = jwt.verify(token, process.env.SECRET_KEY || "chlk"); // Verifica el token
+    console.log("Token verificado:", user); // Debugging
+    req.user = user; // Asigna el usuario decodificado al request
+    next();
+  } catch (error) {
+    console.error("Error verificando token:", error); // Debugging
+    return res.status(403).json({ message: "Token no válido" });
+  }
+}
 
-app.use("/api", authenticateToken);  // Usar authenticateToken para proteger las rutas
+// Rutas públicas
+app.use("/api/auth", loginRoutes); // Login no requiere autenticación
 
-// Rutas con prefijo /api/
-app.use("/api/clients", clientRoutes);  // Ruta para clientes
-app.use("/api/cabins", cabinRoutes);  // Ruta para cabañas
-app.use("/api/reservations", reservationRoutes);  // Ruta para reservas
-app.use("/api/register", registerRoutes); // Ruta para crear usuarios
+// Rutas protegidas con JWT
+app.use("/api", authenticateToken); // Aplica middleware a todas las rutas /api/*
+app.use("/api/clients", clientRoutes);
+app.use("/api/cabins", cabinRoutes);
+app.use("/api/reservations", reservationRoutes);
+app.use("/api/register", registerRoutes);
+app.use("/api/reportes", reportRoutes); // Nueva ruta para reportes
 
 // Iniciar el servidor
 const PORT = process.env.PORT || 3000;
