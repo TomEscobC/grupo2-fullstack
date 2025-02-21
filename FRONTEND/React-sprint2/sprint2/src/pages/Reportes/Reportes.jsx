@@ -771,4 +771,4 @@ const TableComponent = ({ table, theme }) => {
   );
 };
 
-export default App;
+
