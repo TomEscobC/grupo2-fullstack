@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import axios from "axios";
-import { useReactTable, getCoreRowModel, flexRender, getPaginationRowModel} from "@tanstack/react-table";
+import { useReactTable, getCoreRowModel, flexRender, getPaginationRowModel, } from "@tanstack/react-table";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, Legend } from "recharts";
 
 // Constantes
@@ -772,4 +772,3 @@ const TableComponent = ({ table, theme }) => {
 };
 
 export default App;
-

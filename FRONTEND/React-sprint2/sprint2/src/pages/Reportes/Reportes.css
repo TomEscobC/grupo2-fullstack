@@ -4,7 +4,8 @@
     margin-left: 250px; /* Espacio para el sidebar */
     padding: 20px;
     background-color: #f8f9fa;
-    min-height: calc(100vh - 70px); /* Altura mínima dinámica */
+    min-height: calc(100vh - 70px); /* Altura mínima dinámic
+    a */
     overflow-y: auto;
   }
   
