@@ -36,7 +36,7 @@ const handleUpdate = async () => {
     }
 
     // Obtener el token desde localStorage
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("authToken");
 
     if (!token) {
       console.error("No token found!");
@@ -81,7 +81,7 @@ const handleUpdate = async () => {
 const handleDelete = async (id) => {
   try {
     // Obtener el token desde localStorage
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("authToken");
 
     if (!token) {
       console.error("No token found!");
@@ -113,7 +113,7 @@ useEffect(() => {
   const fetchReservas = async () => {
     try {
       // Obtener el token desde localStorage
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("authToken");
 
       if (!token) {
         console.error("No token found!");

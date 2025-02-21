@@ -26,32 +26,32 @@ function AñadirReservas() {
 
   useEffect(() => {
     const fetchCabanas = async () => {
-      const token = localStorage.getItem("token"); // Obtén el token del localStorage
-
+      const token = localStorage.getItem("authToken"); // Obtén el token del localStorage
+    console.log(token)
       if (token) {
         try {
-          // Si tenemos el token, lo agregamos a los encabezados de la solicitud
           const response = await fetch("http://localhost:3000/api/cabins", {
             method: "GET",
             headers: {
               "Authorization": `Bearer ${token}`,  // Agregar el token aquí
             },
           });
-
+    
           if (!response.ok) {
             throw new Error("Error al obtener las cabañas");
           }
-
+    
           const data = await response.json();
-          console.log("Datos de cabañas:", data);  // Verifica los datos
+          console.log("Datos de cabañas:", data);
           setHabitaciones(data);  // Guarda las cabañas en el estado
         } catch (error) {
-          console.error("Error al obtener cabañas:", error);
+          console.error(error);
         }
       } else {
         console.error("No se encontró el token de autenticación.");
       }
     };
+    
 
     fetchCabanas();
   }, []);
@@ -129,7 +129,7 @@ function AñadirReservas() {
     };
   
     // Recuperamos el token de localStorage
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("authToken");
   
     if (token) {
       try {
@@ -200,7 +200,7 @@ function AñadirReservas() {
     };
   
     // Obtener el token de localStorage
-    const token = localStorage.getItem("token");  // Recuperamos el token
+    const token = localStorage.getItem("authToken");  // Recuperamos el token
   
     if (token) {
       try {
