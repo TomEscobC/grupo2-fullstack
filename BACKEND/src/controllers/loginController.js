@@ -58,6 +58,10 @@ router.post('/login', express.json(), async (req, res) => {
 });
 
 // Rutas protegidas
+router.get('/usuario', authenticateToken, (req, res) => {
+  res.status(200).json({ message: 'Acceso concedido a los usuarios', user: req.user });
+});
+
 router.get('/reportes', authenticateToken, (req, res) => {
   res.status(200).json({ message: 'Acceso concedido a los reportes', user: req.user });
 });

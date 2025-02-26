@@ -14,7 +14,7 @@ function Header() {
           <p id="ejemplo-user">USUARIO</p>
         </div>
         <p id="desconectarse">
-          <Link to="./Loging">Desconectarse</Link>
+          <Link to="/">Desconectarse</Link>
         </p>
       </div>
     </header>

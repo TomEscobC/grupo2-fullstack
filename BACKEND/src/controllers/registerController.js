@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const registrarUsuario = async (req, res) => {
     try {
         const { username, password } = req.body;
+        console.log('Datos recibidos del frontend:', req.body);
         
         // Hash de la contraseña
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -15,8 +16,10 @@ const registrarUsuario = async (req, res) => {
         });
 
         const savedUser = await newUser.save();
+        console.log('Usuario guardado en la base de datos:', savedUser);
         res.status(201).json(savedUser);
     } catch (error) {
+        console.error('Error en registrarUsuario:', error.message);
         res.status(400).json({ message: error.message });
     }
 };
