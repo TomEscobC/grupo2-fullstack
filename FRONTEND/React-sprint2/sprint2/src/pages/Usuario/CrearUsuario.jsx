@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Usuario.css";
+import "./CrearUsuario.css";
 
 const NewUser = () => {
   const [formData, setFormData] = useState({

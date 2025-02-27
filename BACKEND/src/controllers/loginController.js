@@ -9,11 +9,9 @@ const SECRET_KEY = 'chlk';
 // Middleware para verificar el token JWT
 function authenticateToken(req, res, next) {
   const token = req.headers['authorization']; // Se espera que el token esté en el encabezado Authorization
-
   if (!token) {
     return res.status(401).json({ message: 'Acceso denegado, no se proporcionó token' });
   }
-
   // Verifica el token
   jwt.verify(token, SECRET_KEY, (err, user) => {
     if (err) {
@@ -44,21 +42,37 @@ router.post('/login', express.json(), async (req, res) => {
 
     // Verifica la contraseña
     const matchPass = await user.comparePassword(password);
-
     if (!matchPass) {
       return res.status(401).json({ message: 'Contraseña incorrecta, inténtelo de nuevo' });
     }
 
     // Crea un token JWT
     const token = jwt.sign({ userId: user._id }, SECRET_KEY, { expiresIn: '1h' });
-    res.status(200).json({ message: 'Login exitoso', token });
+
+    // Devuelve el token, el ID y el nombre de usuario en la respuesta
+    res.status(200).json({
+      message: 'Login exitoso',
+      token,
+      user: {
+        id: user._id, // ID del usuario
+        username: user.username, // Nombre de usuario
+      },
+    });
   } catch (error) {
     res.status(500).json({ message: 'Error en el servidor', error });
   }
 });
 
 // Rutas protegidas
-router.get('/usuario', authenticateToken, (req, res) => {
+router.get('/crear-usuario', authenticateToken, (req, res) => {
+  res.status(200).json({ message: 'Acceso concedido a los usuarios', user: req.user });
+});
+
+router.get('/modificar-usuario', authenticateToken, (req, res) => {
+  res.status(200).json({ message: 'Acceso concedido a los usuarios', user: req.user });
+});
+
+router.get('/eliminar-usuario', authenticateToken, (req, res) => {
   res.status(200).json({ message: 'Acceso concedido a los usuarios', user: req.user });
 });
 

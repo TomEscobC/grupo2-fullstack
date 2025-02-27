@@ -20,7 +20,7 @@ function Login({ setIsAuthenticated }) {
 
     try {
       // Realiza la solicitud POST con fetch
-      const response = await fetch("http://localhost:3000/api/auth/login", { // Cambié la URL de login
+      const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,9 +33,11 @@ function Login({ setIsAuthenticated }) {
 
       const data = await response.json();
 
-      if (response.ok) {
-        // Guardar el token en el localStorage
-        localStorage.setItem("authToken", data.token);
+    if (response.ok) {
+      // Guardar el token y el nombre de usuario en el localStorage
+      localStorage.setItem("authToken", data.token);
+      localStorage.setItem("userId", data.user.id); // Guardamos el ID del usuario
+      localStorage.setItem("username", data.user.username); // Guardamos el nombre de usuario
 
         // Verificar si el token se guardó correctamente
         console.log("Token guardado:", data.token);

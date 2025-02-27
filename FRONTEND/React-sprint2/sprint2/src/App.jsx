@@ -2,7 +2,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import { useState, useEffect } from "react";
 import BarraLateral from "./components/BarraLateral";
 import Login from "./pages/Login/Login";
-import Usuario from "./pages/Usuario/Usuario";
+import CrearUsuario from "./pages/Usuario/CrearUsuario";
+import ModificarUsuario from "./pages/Usuario/ModificarUsuario";
+import EliminarUsuario from "./pages/Usuario/EliminarUsuario";
 import EstadoCabañas from "./pages/Cabañas/EstadoCabañas";
 import ListaCabañas from "./pages/Cabañas/ListaCabañas";
 import AñadirReservas from "./pages/Reservas/AñadirReservas";
@@ -49,11 +51,29 @@ function App() {
         
         {/* Rutas protegidas */}
 
-        <Route path="/usuario" element={
+        <Route path="/crear-usuario" element={
           <ProtectedRoute>
             <Header />
             <BarraLateral />
-            <Usuario />
+            <CrearUsuario />
+            <Footer />
+          </ProtectedRoute>
+        } />
+        
+        <Route path="/modificar-usuario" element={
+          <ProtectedRoute>
+            <Header />
+            <BarraLateral />
+            <ModificarUsuario />
+            <Footer />
+          </ProtectedRoute>
+        } />
+
+        <Route path="/eliminar-usuario" element={
+          <ProtectedRoute>
+            <Header />
+            <BarraLateral />
+            <EliminarUsuario />
             <Footer />
           </ProtectedRoute>
         } />

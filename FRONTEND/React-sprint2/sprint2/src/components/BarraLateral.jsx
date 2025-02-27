@@ -18,7 +18,14 @@ const Sidebar = () => {
           <Link className="nav-link active" to="/reportes">Dashboard</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/usuario">Usuario</Link>
+          <div className="nav-link" onClick={() => toggleSubMenu("usuario")}>Usuario</div>
+          {openSubMenu === "usuario" && (
+            <ul className="submenu">
+              <li><Link className="nav-link" to="/crear-usuario">Crear Usuario</Link></li>
+              <li><Link className="nav-link" to="/modificar-usuario">Modificar Usuario</Link></li>
+              <li><Link className="nav-link" to="/eliminar-usuario">Eliminar Usuario</Link></li>
+            </ul>
+            )}
         </li>
         <li className="nav-item">
           <div className="nav-link" onClick={() => toggleSubMenu("reserva")}>Reserva</div>
